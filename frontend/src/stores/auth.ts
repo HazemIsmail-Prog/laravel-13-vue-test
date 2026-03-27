@@ -9,11 +9,10 @@ export const useAuthStore = defineStore('auth', () => {
     const user = ref<User | null>(null)
     const loading = ref(false)
     const authError = ref<any | null>(null)
-    const authChecked = ref(false)
-    const isAuthenticated = computed(() => user.value !== null && authChecked.value)
+    const isAuthenticated = computed(() => user.value !== null && localStorage.getItem('token') !== null)
 
     const getUser = async () => {
-        if (!authChecked.value) {
+        if (!localStorage.getItem('token')) {
             return
         }
         try {
@@ -23,7 +22,7 @@ export const useAuthStore = defineStore('auth', () => {
         } catch (error: any) {
             if (error.response.status === 401) {
                 user.value = null
-                authChecked.value = false
+                localStorage.removeItem('token')
                 console.log('user not authenticated')
             }
             authError.value = error.response.data
@@ -33,16 +32,15 @@ export const useAuthStore = defineStore('auth', () => {
     const login = async (payload: LoginForm) => {
         try {
             loading.value = true
-            await axiosInstance.get('/sanctum/csrf-cookie')
             const response = await axiosInstance.post('/api/login', payload)
-            user.value = response.data
+            localStorage.setItem('token', response.data)
             authError.value = null
             router.push({ name: 'dashboard' })
         } catch (error: any) {
             authError.value = error.response.data
+            localStorage.removeItem('token')
         } finally {
             loading.value = false
-            authChecked.value = true
         }
     }
 
@@ -54,14 +52,14 @@ export const useAuthStore = defineStore('auth', () => {
         } finally {
             loading.value = false
             user.value = null
-            authChecked.value = false            
+            localStorage.removeItem('token')       
         }
     }
 
-    return { login, logout, loading, authError,authChecked, user, getUser, isAuthenticated }
+    return { login, logout, loading, authError, user, getUser, isAuthenticated }
 },{
     persist:{
         storage:localStorage,
-        pick:['authChecked','user']
+        pick:['user']
     }
 })

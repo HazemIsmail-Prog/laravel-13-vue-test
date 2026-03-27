@@ -18,10 +18,7 @@ class IsActiveMiddleware
         if($request->user()){
             if (!$request->user()->is_active) {
                 // logout
-                if ($request->hasSession()) {
-                    $request->session()->invalidate();
-                    $request->session()->regenerateToken();
-                }
+                $request->user()->tokens()->delete();
                 return response()->json(['message' => 'Your account is suspended'], 401);
             }
         }
