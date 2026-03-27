@@ -12,7 +12,7 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   const auth = useAuthStore()
-  await auth.getUser()
+  // await auth.getUser()
   if (to.meta.guest && auth.isAuthenticated) {
     return { name: 'dashboard' }
   } else if (to.meta.requiresAuth && !auth.isAuthenticated) {

@@ -24,6 +24,7 @@ export const useAuthStore = defineStore('auth', () => {
             if (error.response.status === 401) {
                 user.value = null
                 authChecked.value = false
+                console.log('user not authenticated')
             }
             authError.value = error.response.data
         }
@@ -33,7 +34,9 @@ export const useAuthStore = defineStore('auth', () => {
         try {
             loading.value = true
             await axiosInstance.get('/sanctum/csrf-cookie')
-            await axiosInstance.post('/api/login', payload)
+            const response = await axiosInstance.post('/api/login', payload)
+            user.value = response.data
+            authError.value = null
             router.push({ name: 'dashboard' })
         } catch (error: any) {
             authError.value = error.response.data

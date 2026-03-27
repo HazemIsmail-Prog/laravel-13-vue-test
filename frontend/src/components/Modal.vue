@@ -53,7 +53,7 @@ const handleOverlayClick = () => {
 
 
             <aside 
-                class="h-screen p-3 bg-background shadow flex flex-col border-s md:border-none border-border" 
+                class="h-dvh p-3 bg-background shadow flex flex-col border-s md:border-none border-border" 
                 :style="{ width: modalWidth + 'px'}"
             >
                 <slot />

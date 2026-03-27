@@ -17,7 +17,7 @@ const form = ref<LoginForm>({
 </script>
 
 <template>
-    <div class="flex min-h-screen bg-secondary-background items-center justify-center">
+    <div class="flex min-h-dvh bg-secondary-background items-center justify-center">
         <form
             @submit.prevent="auth.login(form)"
             class="bg-background p-8 rounded-lg shadow-lg w-full max-w-md space-y-6"

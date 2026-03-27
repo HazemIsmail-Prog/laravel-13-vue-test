@@ -14,12 +14,14 @@ import UsersForm from './UsersForm.vue'
 import type { User } from '@/types'
 import Spinner from '@/components/Spinner.vue'
 import { useTabTitle } from '@/composables/tabTitle'
+import TransitionComponent from '@/components/TransitionComponent.vue'
 
 useTabTitle('Users')
 const { translated } = useTranslateBackend()
 const crud = useCrud<User>('/api/users')
 const { 
     records, 
+    modalIsOpen,
     nextPageUrl, 
     loadingMore, 
     recordsTotal, 
@@ -73,13 +75,16 @@ useIntersectionObserver(
     <SidebarLayout>
 
         <template #header>
-            <div class="flex justify-between items-center">
+            <div class="flex justify-between items-center h-[32px]">
                 <h1>{{ $t('Users') }}</h1>
-                <Button 
+                <TransitionComponent :show="!modalIsOpen" :height="0" :width="140" :durationSeconds="0.15" transissionMode="slide-h">
+                    <Button
+                    class="whitespace-nowrap w-[140px]"
                     :leadingIcon="Plus"
                     :label="$t('Add New User')" 
                     @click="openModal(null)"
-                />
+                    />
+                </TransitionComponent>
             </div>
         </template>
 

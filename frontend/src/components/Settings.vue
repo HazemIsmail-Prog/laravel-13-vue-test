@@ -6,12 +6,24 @@ import TransisionComponent from '@/components/TransitionComponent.vue'
 import { Settings } from '@lucide/vue'
 const expanded = ref(false)
 
+const onPointerEnter = (event: PointerEvent) => {
+  if (event.pointerType === 'mouse') {
+    expanded.value = true
+  }
+}
+
+const onPointerLeave = (event: PointerEvent) => {
+  if (event.pointerType === 'mouse') {
+    expanded.value = false
+  }
+}
+
 </script>
 
 <template>
     <div 
-        @mouseenter="expanded = true"
-        @mouseleave="expanded = false"
+        @pointerenter="onPointerEnter"
+        @pointerleave="onPointerLeave"
         class="flex flex-col"
     >
         <TransisionComponent 

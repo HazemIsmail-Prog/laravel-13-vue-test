@@ -38,7 +38,7 @@ const { translated } = useTranslateBackend()
 
 
             <aside 
-                class="h-screen p-3 bg-background shadow flex flex-col border-e md:border-none border-border" 
+                class="h-dvh p-3 bg-background shadow flex flex-col border-e md:border-none border-border" 
                 :style="{ width: sidebar.sidebarWidth + 'px'}"
             >
                 <h1 class="text-xl font-bold text-text px-2 whitespace-nowrap">My App</h1>

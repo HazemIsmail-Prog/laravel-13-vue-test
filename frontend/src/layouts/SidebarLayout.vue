@@ -5,11 +5,11 @@ import Topbar from '../components/Topbar.vue'
 
 <template>
 
-    <div class="h-screen md:flex md:overflow-y-auto bg-background">
+    <div class="h-dvh md:flex md:overflow-y-auto bg-background">
 
         <Sidebar />
 
-        <section class="min-h-screen flex-1 flex flex-col overflow-y-auto">
+        <section class="min-h-dvh flex-1 flex flex-col overflow-y-auto">
             
             <Topbar>
                 <slot name="header" />
