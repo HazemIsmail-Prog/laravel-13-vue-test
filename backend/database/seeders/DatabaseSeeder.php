@@ -22,5 +22,9 @@ class DatabaseSeeder extends Seeder
             'name_ar' => 'مستخدم تجريبي',
             'email' => 'test@example.com',
         ]);
+
+        $this->call([
+            PermissionSeeder::class,
+        ]);
     }
 }

@@ -39,13 +39,15 @@ class User extends Authenticatable
 
     public function getCanAttribute(): array
     {
-        return [
-            'view_dashboard',
-            'view_users',
-            'create_users',
-            'update_users',
-            'delete_users',
-        ];
+        $permissions = $this->permissions->pluck('name_en')->toArray();
+        $roles = $this->roles->load('permissions')->pluck('permissions.*.name_en')->flatten()->toArray();
+        // return unique permissions and roles
+        return array_unique(array_merge($permissions, $roles));
+    }
+
+    public function hasPermission(string $permission): bool
+    {
+        return in_array($permission, $this->can);
     }
 
     public function getNameAttribute(): object
@@ -54,5 +56,15 @@ class User extends Authenticatable
             'ar' => $this->name_ar,
             'en' => $this->name_en,
         ];
+    }
+
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
     }
 }
